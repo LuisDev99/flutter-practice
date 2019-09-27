@@ -30,7 +30,9 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Hello Luis, Login")),
+      //appBar: AppBar(title: Text("Hello Luis, Login")),
+      resizeToAvoidBottomInset:
+          false, //This avoid any overflow when the keyboard shows up, also, this enables the transition to move up all the widgets up and i dont know why
       body: Stack(
         //Using a stack soo that i can put an background image and lay the other widgets on top of it
         children: <Widget>[
@@ -43,12 +45,10 @@ class _LoginState extends State<Login> {
             ),
           ),
           AnimatedContainer(
+            //This will animate all the widgets when keyboard shows up
             curve: Curves.easeOut,
             duration: Duration(
-              milliseconds: 500,
-            ),
-            reverseDuration: Duration(
-              milliseconds: 500,
+              milliseconds: 250,
             ),
             width: double.infinity,
             height: double.infinity,
@@ -61,8 +61,8 @@ class _LoginState extends State<Login> {
                   width:
                       300, //Give it a width soo that the textfield wont take the whole column space
                   child: TextField(
-                    obscureText: false,
                     decoration: InputDecoration(
+                      //border: InputBorder(borderSide: BorderSide(width: 2)),
                       labelText: 'Username',
                     ),
                   ),
@@ -89,10 +89,7 @@ class _LoginState extends State<Login> {
                     Spacer(),
                   ],
                 ),
-                SizedBox(
-                  height: 30,
-                ),
-
+                SizedBox(height: 30),
                 RichText(
                   text: TextSpan(
                     children: [
@@ -125,28 +122,43 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return OutlineButton(
       onPressed: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => MenuList()),
         );
       },
+
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF0D47A1),
-              Color(0xFF1976D2),
-              Color(0xFF42A5F5),
-            ],
-          ),
-        ),
-        padding: EdgeInsets.all(14.0),
-        child: Text(_btnText, style: TextStyle(fontSize: 20)),
+      child: Text(
+        _btnText,
+        style: TextStyle(fontSize: 20),
       ),
+
+      //Create a button with gradient colors
+      // child: Container(
+      //   decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //       colors: <Color>[
+      //         Color(0xFF0D47A1),
+      //         Color(0xFF1976D2),
+      //         Color(0xFF42A5F5),
+      //       ],
+      //     ),
+      //   ),
+      //   padding: EdgeInsets.all(14.0),
+      //   child: Text(_btnText, style: TextStyle(fontSize: 20)),
+      // ),
+
+      //Button with borders template
+      //OutlineButton(
+      //    child: Text("Button text"),
+      //    onPressed: null,
+      //    shape: RoundedRectangleBorder(
+      //        borderRadius: BorderRadius.circular(30.0))),
     );
   }
 }
